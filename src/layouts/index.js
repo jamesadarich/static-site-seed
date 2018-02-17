@@ -13,7 +13,9 @@ const TemplateWrapper = ({ children }) => (
         { name: 'description', content: 'Starter for a static website' },
         { name: 'keywords', content: 'static, website, seed' },
       ]}
-    />
+    >
+      <html lang="en" />
+    </Helmet>
     <Header />
     <div
       style={{

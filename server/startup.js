@@ -14,7 +14,10 @@ function setHeaders (res, path) {
   res.setHeader('X-Content-Type-Options', "nosniff");
   res.setHeader('X-Xss-Protection', "1; mode=block");
   res.setHeader('X-Frame-Options', "SAMEORIGIN");
-  res.removeHeader('')
+
+  if (/(html|css|javascript)$/.test(serveStatic.mime.lookup(path))) {
+      res.setHeader("Content-Encoding", "gzip");
+  }
 }
  
 // Create server
