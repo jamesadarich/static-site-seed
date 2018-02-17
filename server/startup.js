@@ -3,7 +3,19 @@ var http = require('http');
 var serveStatic = require('serve-static');
  
 // Serve up public/ftp folder
-var serve = serveStatic('public', {'index': ['index.html', 'index.htm']});
+var serve = serveStatic('public', {
+    'index': ['index.html', 'index.htm'],
+    'setHeaders': setHeaders
+});
+
+// Set header to force download
+function setHeaders (res, path) {
+  res.setHeader('Referrer-Policy', "strict-origin");
+  res.setHeader('X-Content-Type-Options', "nosniff");
+  res.setHeader('X-Xss-Protection', "1; mode=block");
+  res.setHeader('X-Frame-Options', "SAMEORIGIN");
+  res.removeHeader('')
+}
  
 // Create server
 var server = http.createServer(function onRequest (req, res) {
