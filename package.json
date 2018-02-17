@@ -16,6 +16,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
+    "prestart": "npm run build",
+    "start": "node ./server/startup.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
