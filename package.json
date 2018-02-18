@@ -15,7 +15,8 @@
     "gatsby-source-filesystem": "^1.5.20",
     "gatsby-transformer-remark": "^1.7.32",
     "glob": "^7.1.2",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "typescript": "^2.7.2"
   },
   "license": "MIT",
   "scripts": {

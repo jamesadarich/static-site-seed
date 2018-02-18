@@ -7,9 +7,9 @@
  // You can delete this file if you're not using it
 
 // blog stuff
-const path = require("path");
+import * as path from "path";
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
+exports.createPages = ({ boundActionCreators, graphql }: any) => {
   const { createPage } = boundActionCreators;
 
   const blogPostTemplate = path.resolve(`src/components/blog-post.tsx`);
@@ -29,12 +29,12 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-  `).then(result => {
+  `).then((result: any) => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
 
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    result.data.allMarkdownRemark.edges.forEach(({ node }: any) => {
       createPage({
         path: node.frontmatter.path,
         component: blogPostTemplate,
@@ -48,10 +48,10 @@ const fs = require('fs') // native
 const zlib = require('zlib')  // native
 const glob = require('glob') // https://www.npmjs.com/package/glob
 
-exports.onPostBuild = (pages) => {
+exports.onPostBuild = (pages: any) => {
   const publicPath = path.join(__dirname, 'public')
   const gzippable = glob.sync(`${publicPath}/**/?(*.html|*.js|*.css)`)
-  gzippable.forEach(file => {
+  gzippable.forEach((file: any) => {
     const content = fs.readFileSync(file) 
     const zipped = zlib.gzipSync(content)
     fs.writeFileSync(`${file}`, zipped)
