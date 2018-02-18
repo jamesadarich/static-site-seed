@@ -1,15 +1,15 @@
 import * as React from "react";
 import PostLink from "../components/post-link";
 
-const BlogList = ({ data: { allMarkdownRemark: { edges } } }: any) => {
-  const Posts = edges
+export default function BlogList({
+  data: { allMarkdownRemark: { edges } }
+}: any) {
+  const POSTS = edges
     .filter((edge: any) => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
     .map((edge: any) => <PostLink key={edge.node.id} post={edge.node} />);
 
-  return <div>{Posts}</div>;
-};
-
-export default BlogList;
+  return <div>{POSTS}</div>;
+}
 
 export const pageQuery = graphql`
   query IndexQuery {
