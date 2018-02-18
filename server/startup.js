@@ -1,33 +1,46 @@
-var finalhandler = require('finalhandler');
-var http = require('http');
-var serveStatic = require('serve-static');
+var express = require("express");
+var path = require("path");
+
+const app = express();
  
+app.use((error, request, response, next) => {    
+  response.setHeader("Referrer-Policy", "strict-origin");
+  response.setHeader("X-Content-Type-Options", "nosniff");
+  response.setHeader("X-Xss-Protection", "1; mode=block");
+  response.setHeader("X-Frame-Options", "SAMEORIGIN");
+  next(error);
+});
+
 // Serve up public/ftp folder
-var serve = serveStatic('public', {
-    'index': ['index.html', 'index.htm'],
-    'setHeaders': setHeaders
+app.use(express.static("public", {
+    index: "index.html",
+    setHeaders: setHeaders
+}));
+
+app.use((request, response) => {
+    sendStatusFile(404, response);
+});
+
+app.use((error, request, response, next) => {
+    sendStatusFile(500, response);
 });
 
 // Set header to force download
 function setHeaders (res, path) {
-  res.setHeader('Referrer-Policy', "strict-origin");
-  res.setHeader('X-Content-Type-Options', "nosniff");
-  res.setHeader('X-Xss-Protection', "1; mode=block");
-  res.setHeader('X-Frame-Options', "SAMEORIGIN");
-
-  if (/(html|css|javascript)$/.test(serveStatic.mime.lookup(path))) {
+  if (/(html|css|javascript)$/.test(express.static.mime.lookup(path))) {
       res.setHeader("Content-Encoding", "gzip");
   }
 }
- 
-// Create server
-var server = http.createServer(function onRequest (req, res) {
-  serve(req, res, finalhandler(req, res));
-});
+
+const sendStatusFile = (status, response) => {
+    response.status(status);
+    response.setHeader("Content-Encoding", "gzip");
+    response.sendFile(path.resolve(`./public/${status}/index.html`));
+}
 
 const PORT_NUMBER = 8080;
  
 // Listen
-server.listen(PORT_NUMBER);
+app.listen(PORT_NUMBER);
 
 console.log(`server listening at port ${PORT_NUMBER}`);
