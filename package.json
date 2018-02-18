@@ -8,6 +8,7 @@
     "gatsby": "^1.9.199",
     "gatsby-cli": "^1.1.40",
     "gatsby-link": "^1.6.37",
+    "gatsby-plugin-google-tagmanager": "^1.0.14",
     "gatsby-plugin-react-helmet": "^2.0.5",
     "gatsby-plugin-typescript": "^1.4.16",
     "gatsby-source-filesystem": "^1.5.20",
