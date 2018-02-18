@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
 import Header from '../components/Header'
 import './index.css'
 
-const TemplateWrapper = ({ children }) => (
+const TemplateWrapper = ({ children }: any) => (
   <div>
     <Helmet
       title="Static Site Seed"
@@ -28,9 +28,9 @@ const TemplateWrapper = ({ children }) => (
       {children()}
     </div>
   </div>
-)
+);
 
-TemplateWrapper.propTypes = {
+(TemplateWrapper as any).propTypes = {
   children: PropTypes.func,
 }
 

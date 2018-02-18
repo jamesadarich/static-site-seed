@@ -1,10 +1,10 @@
-import React from "react";
+import * as React from "react";
 import PostLink from "../components/post-link";
 
-const BlogList = ({ data: { allMarkdownRemark: { edges } } }) => {
+const BlogList = ({ data: { allMarkdownRemark: { edges } } }: any) => {
   const Posts = edges
-    .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
-    .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
+    .filter((edge: any) => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
+    .map((edge: any) => <PostLink key={edge.node.id} post={edge.node} />);
 
   return <div>{Posts}</div>;
 };

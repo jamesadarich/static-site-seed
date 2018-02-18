@@ -6,7 +6,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet',
-
+    'gatsby-plugin-typescript',
     // markdown plugins
     {
       resolve: `gatsby-source-filesystem`,
