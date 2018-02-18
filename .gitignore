@@ -7,3 +7,4 @@ public/
 
 # TypeScript
 build
+*.js
