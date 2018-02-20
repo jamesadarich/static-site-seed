@@ -40,7 +40,7 @@ const sendStatusFile = (status, response) => {
   response.sendFile(path.resolve(`./public/${status}/index.html`));
 };
 
-const PORT_NUMBER = 8080;
+const PORT_NUMBER = process.env.PORT_NUMBER || 8080;
 
 // Listen
 app.listen(PORT_NUMBER);

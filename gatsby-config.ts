@@ -1,29 +1,81 @@
 import * as path from "path";
 
-module.exports = {
+interface GatsbyConfig {
   siteMetadata: {
+    siteUrl: string;
+    title: string;
+  }
+  plugins: Array<string | { resolve: string, options?: object }>;
+}
+
+const GATSBY_CONFIG: GatsbyConfig = {
+  siteMetadata: {
+    siteUrl: `https://${process.env.SITE_DOMAIN}`,
     title: "Gatsby Default Starter"
   },
   plugins: [
+    // core templates
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-typescript",
+    "gatsby-plugin-sass",
+
     // markdown plugins
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-filesystem",
       options: {
-        path: path.resolve(`./src/blog`),
+        path: path.resolve("./src/blog"),
         name: "markdown-pages"
       }
     },
-    `gatsby-transformer-remark`,
+    "gatsby-transformer-remark",
 
-    `gatsby-plugin-sass`,
+    // SEO plugins
     {
-      resolve: `gatsby-plugin-google-tagmanager`,
+      resolve: "gatsby-plugin-canonical-urls",
       options: {
-        id: process.env.GOOGLE_TAG_MANAGER_ID,
-        includeInDevelopment: true
+        siteUrl: `https://${process.env.SITE_DOMAIN}`,
+      },
+    },
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+          allSitePage(
+            filter: {
+              path: {
+                regex: "${/^(?!\/(dev-404-page|404|offline-plugin-app-shell-fallback|500)).*$/}"
+              }
+            }
+          ) {
+            edges {
+              node {
+                path
+              }
+            }
+          }
+        }`
       }
     }
   ]
 };
+
+if (process.env.GOOGLE_TAG_MANAGER_ID) {
+  GATSBY_CONFIG.plugins.push(
+    {
+      resolve: "gatsby-plugin-google-tagmanager",
+      options: {
+        id: process.env.GOOGLE_TAG_MANAGER_ID,
+        includeInDevelopment: false
+      }
+    }
+  );
+
+}
+
+export = GATSBY_CONFIG;
