@@ -1,5 +1,6 @@
 # NPM
 node_modules
+npm-debug.log*
 
 # Gatsby
 .cache/
@@ -8,3 +9,6 @@ public/
 # TypeScript
 build
 *.js
+
+# Letsencrypt
+letsencrypt

@@ -17,16 +17,20 @@
     "gatsby-source-filesystem": "^1.5.20",
     "gatsby-transformer-remark": "^1.7.32",
     "glob": "^7.1.2",
+    "greenlock-express": "^2.0.12",
+    "le-challenge-fs": "^2.0.8",
+    "le-store-certbot": "^2.0.5",
     "react-helmet": "^5.2.0",
+    "redirect-https": "^1.1.4",
     "typescript": "^2.7.2"
   },
   "license": "MIT",
   "scripts": {
-    "build": "npm run compile && gatsby build",
-    "compile": "npm run compile:server && npm run compile:gatsby",
-    "compile:server": "tsc server/startup.ts --module commonjs --target esnext",
-    "compile:gatsby": "tsc gatsby-browser.ts gatsby-config.ts gatsby-node.ts gatsby-ssr.ts --module commonjs --target esnext",
-    "develop": "npm run compile && gatsby develop",
+    "build": "npm run build:server && npm run build:gatsby",
+    "build:http": "npm run build:gatsby && tsc server/http-startup.ts --module commonjs --target esnext",
+    "build:server": "tsc server/startup.ts --module commonjs --target esnext",
+    "build:gatsby": "tsc gatsby-browser.ts gatsby-config.ts gatsby-node.ts gatsby-ssr.ts --module commonjs --target esnext && gatsby build",
+    "develop": "npm run build && gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
     "lint": "npm run lint:sass && npm run lint:typescript",
     "lint:fix": "npm run lint:sass:fix && npm run lint:typescript:fix",
@@ -36,6 +40,7 @@
     "lint:typescript:fix": "tslint --fix \"**/*.ts\" \"**/*.tsx\" --exclude \"node_modules/**/*.*\"",
     "prestart": "npm run build",
     "start": "node ./server/startup.js",
+    "start:http": "npm run build:http && node ./server/http-startup.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

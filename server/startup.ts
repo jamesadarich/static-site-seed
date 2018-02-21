@@ -1,64 +1,57 @@
-import * as express from "express";
-import * as path from "path";
+import { app } from "./app";
+import * as greenlock from "greenlock-express";
+import * as https from "https";
+import * as http from "http";
+import * as redirectHttps from "redirect-https";
+import * as leChallengeFs from "le-challenge-fs";
+import * as leStoreCertbot from "le-store-certbot";
 
-const app = express();
-
-app.use((error, request, response: express.Response, next) => {
-  response.setHeader("Referrer-Policy", "strict-origin");
-  response.setHeader("X-Content-Type-Options", "nosniff");
-  response.setHeader("X-Xss-Protection", "1; mode=block");
-  response.setHeader("X-Frame-Options", "SAMEORIGIN");
-  response.removeHeader("X-Powered-By");
-  next(error);
+// returns an instance of node-greenlock with additional helper methods
+var lex = greenlock.create({
+  // set to https://acme-v01.api.letsencrypt.org/directory in production
+  server: "staging",
+ 
+// If you wish to replace the default plugins, you may do so here
+//
+  challenges: { "http-01": leChallengeFs.create({ webrootPath: "./letsencrypt/var/acme-challenges" }) },
+  store: leStoreCertbot.create({ webrootPath: "./letsencrypt/var/acme-challenges" }),
+ 
+// You probably wouldn't need to replace the default sni handler
+// See https://git.coolaj86.com/coolaj86/le-sni-auto if you think you do
+//, sni: require("le-sni-auto").create({})
+ 
+  approveDomains: approveDomains
 });
 
-// Serve up public/ftp folder
-app.use(
-  express.static("public", {
-    index: "index.html",
-    setHeaders,
-    etag: true
-  })
-);
-
-app.use((request, response) => {
-  sendStatusFile(404, response);
-});
-
-app.use((error, request, response, next) => {
-  sendStatusFile(500, response);
-});
-
-function setHeaders(response, filePath) {
-  const mimeEncoding = (express.static.mime as any).lookup(filePath);
-
-  if (/(html|css|javascript)$/.test(mimeEncoding)) {
-    response.setHeader("Content-Encoding", "gzip");
+function approveDomains(opts, certs, cb) {
+  // This is where you check your database and associated
+  // email addresses with domains and agreements and such
+ 
+ 
+  // The domains being approved for the first time are listed in opts.domains
+  // Certs being renewed are listed in certs.altnames
+  if (certs) {
+    opts.domains = certs.altnames;
   }
-
-  if (/css$/.test(mimeEncoding)) {
-    response.setHeader("Cache-Control", "max-age=31536000");
+  else {
+    opts.domains = [ process.env.SITE_DOMAIN ];
+    opts.email = process.env.LETSENCRYPT_USERNAME;
+    opts.agreeTos = true;
   }
-  else if (/javascript$/.test(mimeEncoding)) {
-    response.setHeader("Cache-Control", "private, max-age=31536000");
-  }
-  else if (/^image/.test(mimeEncoding)) {
-    response.setHeader("Cache-Control", "max-age=86400");
-  }
-  else {      
-    response.setHeader("Cache-Control", "no-cache");
-  }
+ 
+  // NOTE: you can also change other options such as `challengeType` and `challenge`
+  // opts.challengeType = "http-01";
+  // opts.challenge = require("le-challenge-fs").create({});
+ 
+  cb(null, { options: opts, certs: certs });
 }
 
-const sendStatusFile = (status, response) => {
-  response.status(status);
-  response.setHeader("Content-Encoding", "gzip");
-  response.sendFile(path.resolve(`./public/${status}/index.html`));
-};
-
-const PORT_NUMBER = process.env.PORT_NUMBER || 8080;
-
-// Listen
-app.listen(PORT_NUMBER);
-
-process.stdout.write(`server listening at port ${PORT_NUMBER}`);
+// handles acme-challenge and redirects to https
+http.createServer(lex.middleware(redirectHttps())).listen(process.env.HTTP_PORT || 80, function () {
+  console.log("Listening for ACME http-01 challenges on", this.address());
+});
+ 
+// handles your app
+https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.HTTPS_PORT || 443, function () {
+  console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
+});
