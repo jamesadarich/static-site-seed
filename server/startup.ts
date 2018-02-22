@@ -1,7 +1,9 @@
+/// <reference path="./redirect-https.d.ts" types="redirect-https" />
+/// <reference path="./definitions.d.ts" />
 import { app } from "./app";
-import * as greenlock from "greenlock-express";
 import * as https from "https";
 import * as http from "http";
+import * as greenlock from "greenlock-express";
 import * as redirectHttps from "redirect-https";
 import * as leChallengeFs from "le-challenge-fs";
 import * as leStoreCertbot from "le-store-certbot";
@@ -46,12 +48,14 @@ function approveDomains(opts, certs, cb) {
   cb(null, { options: opts, certs: certs });
 }
 
+const HTTPS_PORT = process.env.HTTPS_PORT || 443;
+
 // handles acme-challenge and redirects to https
-http.createServer(lex.middleware(redirectHttps())).listen(process.env.HTTP_PORT || 80, function () {
+http.createServer(lex.middleware(redirectHttps({ port: HTTPS_PORT }))).listen(process.env.HTTP_PORT || 80, function () {
   console.log("Listening for ACME http-01 challenges on", this.address());
 });
  
 // handles your app
-https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.HTTPS_PORT || 443, function () {
+https.createServer(lex.httpsOptions, lex.middleware(app)).listen(HTTPS_PORT, function () {
   console.log("Listening for ACME tls-sni-01 challenges and serve app on", this.address());
 });
