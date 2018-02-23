@@ -25,7 +25,7 @@ const GATSBY_CONFIG: GatsbyConfig = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        path: path.resolve("./src/blog"),
+        path: path.resolve("./src"),
         name: "markdown-pages"
       }
     },
@@ -34,13 +34,14 @@ const GATSBY_CONFIG: GatsbyConfig = {
       options: {
         plugins: [
           "gatsby-plugin-sharp",
+          "gatsby-remark-copy-linked-files",
           {
             resolve: "gatsby-remark-images",
             options: {
               // It's important to specify the maxWidth (in pixels) of
               // the content container as this plugin uses this as the
               // base for generating different widths of each image.
-              maxWidth: 590,
+              maxWidth: 1000,
             },
           },
         ],
