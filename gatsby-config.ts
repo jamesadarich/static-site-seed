@@ -8,10 +8,12 @@ interface GatsbyConfig {
   plugins: Array<string | { resolve: string, options?: object }>;
 }
 
+const SITE_NAME = "Static Site Seed";
+
 const GATSBY_CONFIG: GatsbyConfig = {
   siteMetadata: {
     siteUrl: `https://${process.env.SITE_DOMAIN}`,
-    title: "Gatsby Default Starter"
+    title: SITE_NAME
   },
   plugins: [
     // core templates
@@ -21,6 +23,58 @@ const GATSBY_CONFIG: GatsbyConfig = {
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     "gatsby-plugin-offline",
+    
+    {
+      resolve: "gatsby-plugin-favicon",
+      options: {
+        logo: "./src/images/favicon.png",
+        injectHTML: true,
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: true,
+          coast: false,
+          favicons: true,
+          firefox: true,
+          twitter: false,
+          yandex: false,
+          windows: false
+        }
+      }
+    },
+
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: SITE_NAME,
+        short_name: "Static Seed",
+        start_url: "/",
+        background_color: "#eee",
+        theme_color: "teal",
+        display: "minimal-ui",
+        icons: [
+          // Everything in /static will be copied to an equivalent
+          // directory in /public during development and build, so
+          // assuming your favicons are in /static/favicons,
+          // you can reference them here
+          {
+            src: "/favicons/apple-touch-icon-72x72.png",
+            sizes: "72x72",
+            type: "image/png",
+          },
+          {
+            src: "/favicons/apple-touch-icon-114x144.png",
+            sizes: "144x144",
+            type: "image/png",
+          },
+          {
+            src: "/favicons/apple-touch-icon-180x180.png",
+            sizes: "180x180",
+            type: "image/png",
+          },
+        ],
+      },
+    },
 
     // markdown plugins
     {
