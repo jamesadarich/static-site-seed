@@ -11,7 +11,6 @@ LETSENCRYPT_USERNAME - username (email) for letsencrypt certificate creation
 --- optional ---
 
 HTTP_PORT - website challenge/redirect port (default 80)
-HTTPS_PORT - website exposed port (default 443)
 GOOGLE_TAG_MANAGER_ID - google tag manager id
 
 ### Google Tag Manger / Analytics
