@@ -53,10 +53,6 @@ const GATSBY_CONFIG: GatsbyConfig = {
         theme_color: "teal",
         display: "minimal-ui",
         icons: [
-          // Everything in /static will be copied to an equivalent
-          // directory in /public during development and build, so
-          // assuming your favicons are in /static/favicons,
-          // you can reference them here
           {
             src: "/favicons/apple-touch-icon-72x72.png",
             sizes: "72x72",

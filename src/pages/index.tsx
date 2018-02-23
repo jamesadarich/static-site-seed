@@ -20,20 +20,6 @@ export default class IndexPage extends React.PureComponent<any> {
   } 
 }
 
-/*
-export const pageQuery = graphql`
-  query HeaderImageQuery {
-    falconHeavyImage: imageSharp(id: { regex: "/falcon-heavy/" }) {
-      sizes(maxWidth: 1000 ) {
-        ...GatsbyImageSharpSizes
-      }
-    }
-  }
-  <Img sizes={this.props.data.falconHeavyImage.sizes} />
-`
-  */
-
-
 export const pageQuery = graphql`
   query HeaderImageQuery {
     file(relativePath: { eq: "images/falcon-heavy.jpeg" }) {
