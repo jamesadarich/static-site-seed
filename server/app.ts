@@ -3,11 +3,21 @@ import * as path from "path";
 
 const app = express();
 
+//Enforce https with Azure load balancer
+app.use(function(req: any, res: any, next: any) {
+  if (req.get("x-site-deployment-id") && !req.get("x-arr-ssl")) {
+      return res.redirect("https://" + req.get("host") + req.url);
+  }
+  next();
+});
+
 app.use((error, request, response: express.Response, next) => {
   response.setHeader("Referrer-Policy", "strict-origin");
   response.setHeader("X-Content-Type-Options", "nosniff");
   response.setHeader("X-Xss-Protection", "1; mode=block");
   response.setHeader("X-Frame-Options", "SAMEORIGIN");
+  response.setHeader("Strict-Transport-Security", "max-age=31536000;");
+
   response.removeHeader("X-Powered-By");
   next(error);
 });

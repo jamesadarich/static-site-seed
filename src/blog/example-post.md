@@ -7,3 +7,5 @@ keywords: "an, example post"
 ---
 
 This is an example post
+![](falcon-heavy.jpeg)
+![](falcon-9.gif)
