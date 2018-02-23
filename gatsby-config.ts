@@ -20,6 +20,7 @@ const GATSBY_CONFIG: GatsbyConfig = {
     "gatsby-plugin-sass",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
+    "gatsby-plugin-offline",
 
     // markdown plugins
     {
