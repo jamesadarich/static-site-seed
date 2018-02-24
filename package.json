@@ -5,7 +5,7 @@
   "author": "James Adarich",
   "dependencies": {
     "express": "^4.16.2",
-    "file-loader": "^1.1.8",
+    "express-sslify": "^1.2.0",
     "gatsby": "^1.9.199",
     "gatsby-cli": "^1.1.40",
     "gatsby-image": "^1.0.38",
@@ -31,6 +31,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "patch:extract-text-plugin": "sed -i -e 's/if(c\\.initial) return;/if(!c||c.initial) return;/g' ./node_modules/extract-text-webpack-plugin/index.js",
     "build": "npm run build:server && npm run build:gatsby",
     "build:server": "tsc server/startup.ts --module commonjs --target esnext",
     "build:gatsby": "tsc gatsby-browser.ts gatsby-config.ts gatsby-node.ts gatsby-ssr.ts --module commonjs --target esnext && gatsby build",

@@ -1,17 +1,10 @@
 import * as express from "express";
 import * as path from "path";
+import * as enforce from "express-sslify";
 
 const app = express();
 
-//Enforce https with Azure load balancer
-app.use(function(req: any, res: any, next: any) {
-  if (req.get("x-site-deployment-id") && !req.get("x-arr-ssl")) {
-      return res.redirect("https://" + req.get("host") + req.url);
-  }
-  next();
-});
-
-app.use((error, request, response: express.Response, next) => {
+app.use((request, response, next) => {
   response.setHeader("Referrer-Policy", "strict-origin");
   response.setHeader("X-Content-Type-Options", "nosniff");
   response.setHeader("X-Xss-Protection", "1; mode=block");
@@ -19,8 +12,11 @@ app.use((error, request, response: express.Response, next) => {
   response.setHeader("Strict-Transport-Security", "max-age=31536000;");
 
   response.removeHeader("X-Powered-By");
-  next(error);
+  next();
 });
+
+//Enforce https with Azure load balancer
+app.use(enforce.HTTPS({ trustAzureHeader: true }));
 
 // Serve up public/ftp folder
 app.use(
