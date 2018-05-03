@@ -43,6 +43,7 @@
     "lint:sass:fix": "sass-lint \"**/*.scss\" --ignore \"node_modules/**/*.*\" --fix ",
     "lint:typescript": "tslint \"**/*.ts\" \"**/*.tsx\" --exclude \"node_modules/**/*.*\"",
     "lint:typescript:fix": "tslint --fix \"**/*.ts\" \"**/*.tsx\" --exclude \"node_modules/**/*.*\"",
+    "patch:extract-text-plugin": "sed -i -e 's/if(c\\.initial) return;/if(!c||c.initial) return;/g' ./node_modules/extract-text-webpack-plugin/index.js",
     "prestart": "npm run build",
     "start": "node ./server/startup.js",
     "test": "echo \"Error: no test specified\" && exit 1"
