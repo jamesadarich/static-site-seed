@@ -9,6 +9,3 @@ public/
 # TypeScript
 build
 *.js
-
-# Letsencrypt
-letsencrypt
