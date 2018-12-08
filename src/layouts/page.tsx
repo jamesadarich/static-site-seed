@@ -1,5 +1,6 @@
 import * as React from "react";
 import Helmet from "react-helmet";
+import SiteShell from "./index";
 
 interface PageProps {    
     readonly title: string;
@@ -23,7 +24,7 @@ export abstract class Page extends React.PureComponent<PageProps> {
 
     public render() {
         return (
-            <div>                
+            <SiteShell>                
                 <Helmet
                     title={`Static Site Seed - ${this.props.title}`}
                     meta={[
@@ -34,7 +35,7 @@ export abstract class Page extends React.PureComponent<PageProps> {
                     <html lang="en" />
                 </Helmet>
                 {this.props.children}
-            </div>
+            </SiteShell>
         )
     }
 }

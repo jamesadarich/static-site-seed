@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import Header from "../components/Header";
 import "./index.scss";
 
@@ -18,13 +17,9 @@ export default class SiteShell extends React.PureComponent {
             paddingTop: 0
           }}
         >
-          {(this.props.children as any)()}
+          {this.props.children}
         </div>
       </div>
     );
   }
 }
-
-(SiteShell as any).propTypes = {
-  children: PropTypes.func
-};

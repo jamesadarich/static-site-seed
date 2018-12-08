@@ -42,11 +42,11 @@ function setHeaders(response, filePath) {
     response.setHeader("Content-Encoding", "gzip");
   }
 
-  if (/css$/.test(mimeEncoding)) {
-    response.setHeader("Cache-Control", "max-age=31536000");
-  }
-  else if (/javascript$/.test(mimeEncoding)) {
-    response.setHeader("Cache-Control", "private, max-age=31536000");
+  if (
+    /(css|javascript|json)$/.test(mimeEncoding) ||
+    /(\/|\\)public(\/|\\)static(\/|\\)/.test(filePath)
+  ) {
+    response.setHeader("Cache-Control", "public,max-age=31536000,immutable");
   }
   else if (/^image/.test(mimeEncoding)) {
     response.setHeader("Cache-Control", "max-age=86400");

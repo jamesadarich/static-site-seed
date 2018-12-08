@@ -1,8 +1,8 @@
 import * as React from "react";
-import Link from "gatsby-link";
 import { Page } from "../layouts/page";
 import Img from "gatsby-image";
 const falconNine = require("../images/falcon-9.gif");
+import { graphql, Link } from "gatsby";
 
 export default class IndexPage extends React.PureComponent<any> {
 
