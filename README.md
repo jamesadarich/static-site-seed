@@ -1,4 +1,7 @@
 # Static Site Seed
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/jamesadarich/static-site-seed.svg)](https://greenkeeper.io/)
+
 A start point for creating static sites
 
 ## Setup
