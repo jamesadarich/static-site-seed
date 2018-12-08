@@ -6,7 +6,7 @@ interface PostLinkProps {
   post: BlogPost;
 }
 
- export default function PostLink({ post }: PostLinkProps) {
+export default function PostLink({ post }: PostLinkProps) {
   return (
     <div>
       <Link to={post.frontmatter.path}>

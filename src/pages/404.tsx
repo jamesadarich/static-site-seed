@@ -2,7 +2,6 @@ import * as React from "react";
 import { Page } from "../layouts/page";
 
 export default class NotFoundPage extends React.PureComponent {
-
   public render() {
     return (
       <Page title="Not Found" description="Not Found">
@@ -10,5 +9,5 @@ export default class NotFoundPage extends React.PureComponent {
         <p>We couldn't find what you were looking for.</p>
       </Page>
     );
-  } 
+  }
 }

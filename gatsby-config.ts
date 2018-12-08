@@ -4,8 +4,8 @@ interface GatsbyConfig {
   siteMetadata: {
     siteUrl: string;
     title: string;
-  }
-  plugins: Array<string | { resolve: string, options?: object }>;
+  };
+  plugins: Array<string | { resolve: string; options?: object }>;
 }
 
 const SITE_NAME = "Static Site Seed";
@@ -33,8 +33,8 @@ const GATSBY_CONFIG: GatsbyConfig = {
         background_color: "#eee",
         theme_color: "teal",
         display: "minimal-ui",
-        icon: "src/images/favicon.png",
-      },
+        icon: "src/images/favicon.png"
+      }
     },
 
     // markdown plugins
@@ -58,18 +58,18 @@ const GATSBY_CONFIG: GatsbyConfig = {
               // base for generating different widths of each image.
               maxWidth: 1000,
               linkImagesToOriginal: false
-            },
-          },
-        ],
-      },
+            }
+          }
+        ]
+      }
     },
 
     // SEO plugins
     {
       resolve: "gatsby-plugin-canonical-urls",
       options: {
-        siteUrl: `https://${process.env.SITE_DOMAIN}`,
-      },
+        siteUrl: `https://${process.env.SITE_DOMAIN}`
+      }
     },
     {
       resolve: "gatsby-plugin-sitemap",
@@ -134,16 +134,13 @@ const GATSBY_CONFIG: GatsbyConfig = {
 };
 
 if (process.env.GOOGLE_TAG_MANAGER_ID) {
-  GATSBY_CONFIG.plugins.push(
-    {
-      resolve: "gatsby-plugin-google-tagmanager",
-      options: {
-        id: process.env.GOOGLE_TAG_MANAGER_ID,
-        includeInDevelopment: false
-      }
+  GATSBY_CONFIG.plugins.push({
+    resolve: "gatsby-plugin-google-tagmanager",
+    options: {
+      id: process.env.GOOGLE_TAG_MANAGER_ID,
+      includeInDevelopment: false
     }
-  );
-
+  });
 }
 
 export = GATSBY_CONFIG;

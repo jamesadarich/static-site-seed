@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Page } from "../layouts/page";
 import Img from "gatsby-image";
-const falconNine = require("../images/falcon-9.gif");
 import { graphql, Link } from "gatsby";
+// tslint:disable-next-line:no-var-requires
+const falconNine = require("../images/falcon-9.gif");
 
 export default class IndexPage extends React.PureComponent<any> {
-
   public render() {
     return (
       <Page title="Home" description="Welcome to the static site">
@@ -17,7 +17,7 @@ export default class IndexPage extends React.PureComponent<any> {
         <Link to="/blog">Go to blog</Link>
       </Page>
     );
-  } 
+  }
 }
 
 export const pageQuery = graphql`
@@ -32,4 +32,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
