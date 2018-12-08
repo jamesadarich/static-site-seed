@@ -1,6 +1,22 @@
 import * as React from "react";
 import { Link } from "gatsby";
 
+function HeaderLinks() {
+  return (
+    <h1 style={{ margin: 0 }}>
+      <Link
+        to="/"
+        style={{
+          color: "white",
+          textDecoration: "none"
+        }}
+      >
+        Static Site Seed
+      </Link>
+    </h1>
+  );
+}
+
 export default function Header() {
   return (
     <div
@@ -16,17 +32,7 @@ export default function Header() {
           padding: "1.45rem 1.0875rem"
         }}
       >
-        <h1 style={{ margin: 0 }}>
-          <Link
-            to="/"
-            style={{
-              color: "white",
-              textDecoration: "none"
-            }}
-          >
-            Static Site Seed
-          </Link>
-        </h1>
+        <HeaderLinks />
       </div>
     </div>
   );
