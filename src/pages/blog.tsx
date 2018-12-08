@@ -16,7 +16,7 @@ export default (props: BlogListProps) => {
   const POSTS = props.data.allMarkdownRemark.edges
     .filter(edge => !edge.node.frontmatter.draft) // You can filter your posts based on some criteria
     .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
-   return (
+  return (
     <Page title="Blog" description="A list of musings and such">
       {POSTS}
     </Page>
