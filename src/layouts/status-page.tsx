@@ -10,8 +10,10 @@ export interface StatusPageProps {
 export class StatusPage extends React.PureComponent<StatusPageProps> {
   public render() {
     return (
-      <Page title={this.props.title}
-            description={this.props.shortDescription || this.props.description}>
+      <Page
+        title={this.props.title}
+        description={this.props.shortDescription || this.props.description}
+      >
         <h1>{this.props.title}</h1>
         <p>{this.props.description}</p>
       </Page>
