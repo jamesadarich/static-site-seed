@@ -1,17 +1,27 @@
 import * as React from "react";
 import PostLink from "../components/post-link";
 import { Page } from "../layouts/page";
+import { BlogPost } from "../graphql/blog-post";
+import { graphql } from "gatsby";
 
-export default class BlogList extends React.PureComponent<any> {
-
-  public render() {
-    const POSTS = this.props.data.allMarkdownRemark.edges
-      .filter((edge: any) => !edge.node.frontmatter.draft) // You can filter your posts based on some criteria
-      .map((edge: any) => <PostLink key={edge.node.id} post={edge.node} />);
-  
-    return <Page title="Blog" description="A list of musings and such">{POSTS}</Page>;
-  } 
+interface BlogListProps {
+  data: {
+    allMarkdownRemark: {
+      edges: Array<{ node: BlogPost }>;
+    };
+  };
 }
+
+export default (props: BlogListProps) => {
+  const POSTS = props.data.allMarkdownRemark.edges
+    .filter(edge => !edge.node.frontmatter.draft) // You can filter your posts based on some criteria
+    .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
+   return (
+    <Page title="Blog" description="A list of musings and such">
+      {POSTS}
+    </Page>
+  );
+};
 
 export const pageQuery = graphql`
   query IndexQuery {

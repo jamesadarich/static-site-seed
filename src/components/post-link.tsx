@@ -1,7 +1,12 @@
 import * as React from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby";
+import { BlogPost } from "../graphql/blog-post";
 
-export default function PostLink({ post }: any) {
+interface PostLinkProps {
+  post: BlogPost;
+}
+
+ export default function PostLink({ post }: PostLinkProps) {
   return (
     <div>
       <Link to={post.frontmatter.path}>

@@ -23,25 +23,6 @@ const GATSBY_CONFIG: GatsbyConfig = {
     "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     "gatsby-plugin-offline",
-    
-    {
-      resolve: "gatsby-plugin-favicon",
-      options: {
-        logo: "./src/images/favicon.png",
-        injectHTML: true,
-        icons: {
-          android: true,
-          appleIcon: true,
-          appleStartup: true,
-          coast: false,
-          favicons: true,
-          firefox: true,
-          twitter: false,
-          yandex: false,
-          windows: false
-        }
-      }
-    },
 
     {
       resolve: "gatsby-plugin-manifest",
@@ -52,23 +33,7 @@ const GATSBY_CONFIG: GatsbyConfig = {
         background_color: "#eee",
         theme_color: "teal",
         display: "minimal-ui",
-        icons: [
-          {
-            src: "/favicons/apple-touch-icon-72x72.png",
-            sizes: "72x72",
-            type: "image/png",
-          },
-          {
-            src: "/favicons/apple-touch-icon-114x144.png",
-            sizes: "144x144",
-            type: "image/png",
-          },
-          {
-            src: "/favicons/apple-touch-icon-180x180.png",
-            sizes: "180x180",
-            type: "image/png",
-          },
-        ],
+        icon: "src/images/favicon.png",
       },
     },
 
@@ -84,7 +49,6 @@ const GATSBY_CONFIG: GatsbyConfig = {
       resolve: "gatsby-transformer-remark",
       options: {
         plugins: [
-          "gatsby-plugin-sharp",
           "gatsby-remark-copy-linked-files",
           {
             resolve: "gatsby-remark-images",
@@ -93,6 +57,7 @@ const GATSBY_CONFIG: GatsbyConfig = {
               // the content container as this plugin uses this as the
               // base for generating different widths of each image.
               maxWidth: 1000,
+              linkImagesToOriginal: false
             },
           },
         ],
@@ -119,7 +84,7 @@ const GATSBY_CONFIG: GatsbyConfig = {
           allSitePage(
             filter: {
               path: {
-                regex: "${/^(?!\/(dev-404-page|404|offline-plugin-app-shell-fallback|500)).*$/}"
+                regex: "${/^(?!\/(dev-404-page|404|offline-plugin-app-shell-fallback|500|blog\/)).*$/}"
               }
             }
           ) {
@@ -129,7 +94,40 @@ const GATSBY_CONFIG: GatsbyConfig = {
               }
             }
           }
-        }`
+          allMarkdownRemark(
+            filter: {
+              frontmatter: {
+                draft: { ne: true }
+              }
+            }
+          ) {
+            edges {
+              node {
+                frontmatter {
+                  path
+                }
+              }
+            }
+          }
+        }`,
+        serialize: ({ site, allSitePage, allMarkdownRemark }: any) => {
+          const siteUrl = site.siteMetadata.siteUrl;
+
+          return allSitePage.edges
+            .map((edge: any) => siteUrl + edge.node.path)
+            .concat(
+              allMarkdownRemark.edges.map(
+                (edge: any) => siteUrl + edge.node.frontmatter.path
+              )
+            )
+            .map((url: string) => {
+              return {
+                url,
+                changefreq: `daily`,
+                priority: 0.7
+              };
+            });
+        }
       }
     }
   ]
