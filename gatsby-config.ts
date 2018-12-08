@@ -84,7 +84,7 @@ const GATSBY_CONFIG: GatsbyConfig = {
           allSitePage(
             filter: {
               path: {
-                regex: "${/^(?!\/(dev-404-page|404|offline-plugin-app-shell-fallback|500)).*$/}"
+                regex: "${/^(?!\/(dev-404-page|404|offline-plugin-app-shell-fallback|500|blog\/)).*$/}"
               }
             }
           ) {
@@ -94,7 +94,40 @@ const GATSBY_CONFIG: GatsbyConfig = {
               }
             }
           }
-        }`
+          allMarkdownRemark(
+            filter: {
+              frontmatter: {
+                draft: { ne: true }
+              }
+            }
+          ) {
+            edges {
+              node {
+                frontmatter {
+                  path
+                }
+              }
+            }
+          }
+        }`,
+        serialize: ({ site, allSitePage, allMarkdownRemark }: any) => {
+          const siteUrl = site.siteMetadata.siteUrl;
+
+          return allSitePage.edges
+            .map((edge: any) => siteUrl + edge.node.path)
+            .concat(
+              allMarkdownRemark.edges.map(
+                (edge: any) => siteUrl + edge.node.frontmatter.path
+              )
+            )
+            .map((url: string) => {
+              return {
+                url,
+                changefreq: `daily`,
+                priority: 0.7
+              };
+            });
+        }
       }
     }
   ]
