@@ -1,6 +1,7 @@
 # Static Site Seed
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/jamesadarich/static-site-seed.svg)](https://greenkeeper.io/)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0293ae533db1173fcf91/maintainability)](https://codeclimate.com/github/jamesadarich/static-site-seed/maintainability)
 
 A start point for creating static sites
 

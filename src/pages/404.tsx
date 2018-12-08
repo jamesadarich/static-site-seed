@@ -1,13 +1,12 @@
 import * as React from "react";
-import { Page } from "../layouts/page";
+import { StatusPage } from "../layouts/status-page";
 
-export default class NotFoundPage extends React.PureComponent {
-  public render() {
-    return (
-      <Page title="Not Found" description="Not Found">
-        <h1>Not Found</h1>
-        <p>We couldn't find what you were looking for.</p>
-      </Page>
-    );
-  }
+export default function NotFoundPage() {
+  return (
+    <StatusPage
+      title="Not Found"
+      shortDescription="Page could not be found"
+      description="We couldn't find what you were looking for."
+    />
+  );
 }
