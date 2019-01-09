@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as path from "path";
-import * as enforce from "express-sslify";
+// import * as enforce from "express-sslify";
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use((request, response, next) => {
 });
 
 // Enforce https with Azure load balancer
-app.use(enforce.HTTPS({ trustAzureHeader: true }));
+// app.use(enforce.HTTPS({ trustAzureHeader: true }));
 
 // Serve up public/ftp folder
 app.use(

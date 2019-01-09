@@ -9,3 +9,8 @@ public/
 # TypeScript
 build
 *.js
+*.js.map
+
+# Tests
+*.diff.png
+*.actual.png
