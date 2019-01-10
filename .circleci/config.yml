@@ -36,6 +36,7 @@ jobs:
       - run: npm run build
       - run: npm run build:gzip
       - run: npm run test:functional
+      - store_artifacts: ./test/functional
   tidy_up:
     docker:
       - image: node:8
