@@ -27,11 +27,11 @@ app.use((request, response) => {
   sendStatusFile(404, response);
 });
 
-app.use((error, request, response, next) => {
+app.use((request, response) => {
   sendStatusFile(500, response);
 });
 
-function setHeaders(response, filePath) {
+function setHeaders(response: express.Response, filePath: string) {
   const mimeEncoding = (express.static.mime as any).lookup(filePath);
 
   if (/(html|css|javascript)$/.test(mimeEncoding)) {
@@ -50,7 +50,7 @@ function setHeaders(response, filePath) {
   }
 }
 
-const sendStatusFile = (status, response) => {
+const sendStatusFile = (status: number, response: express.Response) => {
   response.status(status);
   response.setHeader("Content-Encoding", "gzip");
   response.sendFile(path.resolve(`./public/${status}/index.html`));
