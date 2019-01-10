@@ -27,6 +27,13 @@ jobs:
       - checkout
       - run: npm install
       - run: npm test
+  functional_tests:
+    docker:
+      - image: node:8
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test:functional
   tidy_up:
     docker:
       - image: node:8
@@ -61,6 +68,7 @@ workflows:
   continuous_integration:
     jobs:
       - static_analysis
+      - functional_tests
 #      - build_and_push_image:
 #          filters:
 #            branches:
