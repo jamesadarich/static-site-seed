@@ -43,7 +43,7 @@ export class ScreenshotComparisonTests {
   private _app: Server;
 
   @AsyncTest("desktop")
-  @Timeout(5000)
+  @Timeout(10000)
   @TestCase("/", "home-page")
   @TestCase("/blog", "blog-page")
   public async desktop(path: string, pageName: string) {
