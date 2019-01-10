@@ -33,7 +33,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: npm test:functional
+      - run: npm run test:functional
   tidy_up:
     docker:
       - image: node:8
