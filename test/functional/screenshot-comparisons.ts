@@ -47,7 +47,7 @@ export class ScreenshotComparisonTests {
   @TestCase("/", "home-page")
   @TestCase("/blog", "blog-page")
   public async desktop(path: string, pageName: string) {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: [ "--no-sandbox" ] });
     const page = await browser.newPage();
 
     await page.goto(`http://localhost:${this._port}${path}`);
