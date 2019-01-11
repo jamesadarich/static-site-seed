@@ -53,7 +53,8 @@ export class ScreenshotComparisonTests {
     await page.goto(`http://localhost:${this._port}${path}`);
 
     await page.screenshot({
-      path: join(__dirname, `./${pageName}.actual.png`)
+      path: join(__dirname, `./${pageName}.actual.png`),
+      fullPage: true
     });
 
     const expectedPng = await loadPng(`./${pageName}.expected.png`);
@@ -75,7 +76,9 @@ export class ScreenshotComparisonTests {
 
     await writePng(join(__dirname, `${pageName}.diff.png`), diffPng);
 
-    Expect(diffPixels).toBe(0);
+    const percentageDifference = diffPixels / (expectedPng.height * expectedPng.width);
+
+    Expect(percentageDifference).toBeLessThan(0.01);
   }
 
   @AsyncSetupFixture
