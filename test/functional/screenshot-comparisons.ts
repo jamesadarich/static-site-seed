@@ -51,7 +51,6 @@ export class ScreenshotComparisonTests {
     const page = await browser.newPage();
 
     await page.goto(`http://localhost:${this._port}${path}`);
-    await page.evaluateHandle('document.fonts.ready');
 
     await page.screenshot({
       path: join(__dirname, `./${pageName}.actual.png`)
