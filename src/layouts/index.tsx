@@ -1,4 +1,8 @@
 import * as React from "react";
+
+// import fonts
+import "typeface-ibm-plex-sans";
+import "typeface-ibm-plex-serif";
 import Header from "../components/Header";
 import "./index.scss";
 
